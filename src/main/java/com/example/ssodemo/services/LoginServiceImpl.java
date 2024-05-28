@@ -1,6 +1,7 @@
 package com.example.ssodemo.services;
 
 import com.alibaba.fastjson.JSON;
+import com.example.ssodemo.mappers.MenuMapper;
 import com.example.ssodemo.models.LoginUser;
 import com.example.ssodemo.models.User;
 import com.example.ssodemo.utils.JwtUtil;

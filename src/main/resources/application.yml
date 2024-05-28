@@ -17,4 +17,6 @@ spring:
         max-wait: 300ms
         max-idle: 16
         min-idle: 8
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/**/*.xml
 

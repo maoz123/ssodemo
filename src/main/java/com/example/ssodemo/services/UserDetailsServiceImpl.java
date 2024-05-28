@@ -2,6 +2,7 @@ package com.example.ssodemo.services;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.example.ssodemo.mappers.MenuMapper;
 import com.example.ssodemo.mappers.UserMapper;
 import com.example.ssodemo.models.LoginUser;
 import com.example.ssodemo.models.User;
@@ -21,6 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private MenuMapper menuMapper;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper();
@@ -28,7 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user == null){
             throw  new RuntimeException("user name does not exits.");
         }
-        List<String> permission = new ArrayList<>(Arrays.asList("full", "custom"));
-        return new LoginUser(user, permission);
+        long id = user.id;
+        List<String> permissions = this.menuMapper.selectPermissions((int)(id));
+        return new LoginUser(user, permissions);
     }
 }

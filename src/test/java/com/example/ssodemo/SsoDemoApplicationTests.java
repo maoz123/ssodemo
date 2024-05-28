@@ -1,5 +1,6 @@
 package com.example.ssodemo;
 
+import com.example.ssodemo.mappers.MenuMapper;
 import com.example.ssodemo.mappers.UserMapper;
 import com.example.ssodemo.models.User;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,9 @@ class SsoDemoApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private MenuMapper menuMapper;
 
     @Test
     public void testUserMapper(){
@@ -34,6 +38,12 @@ class SsoDemoApplicationTests {
 //        String two = encoder.encode("1234");
 //        System.out.println(one);
 //        System.out.println(two);
+    }
+
+    @Test
+    public void testSelectPermsByUserId(){
+        List<String> perms = this.menuMapper.selectPermissions(2);
+        perms.stream().forEach(System.out::println);
     }
 
 }
