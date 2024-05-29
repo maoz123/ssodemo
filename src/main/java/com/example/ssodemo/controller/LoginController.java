@@ -6,6 +6,7 @@ import com.example.ssodemo.models.User;
 import com.example.ssodemo.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping("user/logout")
-    public String logout(@RequestBody User user){
-        return loginService.logout();
+    public ResponseResult logout(@RequestBody User user){
+        return new ResponseResult(HttpStatus.OK.value(), "succeed", loginService.logout(user));
     }
 }

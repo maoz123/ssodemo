@@ -47,13 +47,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             Map<String, Object> claims = JwtUtil.decodeJwt(token);
             String userName = (String) claims.get("userName");
             String redisToken = this.redisTemplate.opsForValue().get(userName);
-            List<String> permission = JSON.parseObject(this.redisTemplate.opsForValue().get(userName + "_permissions"), List.class);
+            //List<String> permission = JSON.parseObject(this.redisTemplate.opsForValue().get(userName + "_permissions"), List.class);
+            List<String> permission = (List<String>) claims.get("permission");
             User user = new User();
             user.setUserName(userName);
             LoginUser loginUser = new LoginUser(user, permission);
 
             if(StringUtils.hasText(redisToken) && redisToken.equals(token)){
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userName, null, loginUser.getAuthorities());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 filterChain.doFilter(request, response);
             }else{

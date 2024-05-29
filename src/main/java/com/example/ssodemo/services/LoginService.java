@@ -5,5 +5,5 @@ import com.example.ssodemo.models.User;
 public interface LoginService {
     public String login(User user);
 
-    String logout();
+    String logout(User user);
 }

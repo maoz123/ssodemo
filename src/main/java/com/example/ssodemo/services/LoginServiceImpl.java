@@ -34,16 +34,18 @@ public class LoginServiceImpl implements LoginService {
         LoginUser loginUser = (LoginUser)authentication.getPrincipal();
         Map<String, Object> claims = new HashMap<>();
         claims.put("userName", loginUser.getUsername());
+        claims.put("permission", loginUser.getPermission());
         String token = JwtUtil.createJwt(claims);
         this.redisTemplate.opsForValue().set(loginUser.getUsername(), token);
-        this.redisTemplate.opsForValue().set(loginUser.getUsername() + "_permissions", JSON.toJSONString(loginUser.getPermission()));
+        //this.redisTemplate.opsForValue().set(loginUser.getUsername() + "_permissions", JSON.toJSONString(loginUser.getPermission()));
         return token;
     }
 
     @Override
-    public String logout() {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        LoginUser user = (LoginUser)usernamePasswordAuthenticationToken.getPrincipal();
+    public String logout(User user) {
+        String userName = user.getUserName();
+        this.redisTemplate.delete(userName);
+        System.out.println("delete token for user " + userName + " succeed.");
 
         return "logout succeed.";
     }
