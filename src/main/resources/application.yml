@@ -17,6 +17,13 @@ spring:
         max-wait: 300ms
         max-idle: 16
         min-idle: 8
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 123
+            client-secret: 456
 mybatis-plus:
   mapper-locations: classpath*:/mappers/**/*.xml
 

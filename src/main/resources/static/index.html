@@ -1,0 +1,57 @@
+<html>
+    <h1>Single Page.</h1>
+
+    <body>
+    <label for="username">Name:</label>
+    <input type="text" id="username" name="user_name" /> <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" /> <br>
+    <input type="submit" id="submit" onclick="submit()" />
+
+    <label>Token : </label>
+    <textarea id="token">
+    </textarea>
+
+    </body>
+
+    <script>
+        function submit(){
+            var userText = $("#username");
+            var passwordText = $("#password");
+            if(userText.val() == null || passwordText.val() == null) {
+                alert("invalid username or password!")
+            }
+            var payload = { "userName" : userText.val(), "password" : passwordText.val()};
+            $.ajax({
+                url: "/user/login",
+                method: "post",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(payload),
+                success: function(data) {
+                    let jwtToken = data['data'].token;
+                    $("#token").val(jwtToken);
+                    localStorage.setItem('token', jwtToken)
+                    window.location.href = "HelloWorld.html";
+                    //sessionStorage.setItem('token', jwtToken)
+                    //alert("login succeed.")
+                },
+                error: function() {
+                    alert("login failed.")
+                }
+            });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+    <style>
+        #submit {
+            font-size: 15px;
+        }
+
+        #token{
+            box-sizing: content-box;
+        }
+    </style>
+
+</html>
