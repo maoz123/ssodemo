@@ -6,4 +6,6 @@ public interface LoginService {
     public String login(User user);
 
     String logout(User user);
+
+    String getLoginToken(String code);
 }

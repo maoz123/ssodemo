@@ -21,9 +21,10 @@ spring:
     oauth2:
       client:
         registration:
-          google:
-            client-id: 123
-            client-secret: 456
+          github:
+            client-id: Ov23liU3lzi8sjhxAGw8
+            client-secret: ac6842a01a058a6dbbcebb2f7b74efde4dfc1519
+            redirect-uri: http://localhost:8080/login/oauth2/code/github
 mybatis-plus:
   mapper-locations: classpath*:/mappers/**/*.xml
 

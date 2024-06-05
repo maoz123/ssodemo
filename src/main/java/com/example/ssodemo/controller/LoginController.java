@@ -7,9 +7,8 @@ import com.example.ssodemo.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class LoginController {
@@ -24,5 +23,10 @@ public class LoginController {
     @PostMapping("user/logout")
     public ResponseResult logout(@RequestBody User user){
         return new ResponseResult(HttpStatus.OK.value(), "succeed", loginService.logout(user));
+    }
+
+    @GetMapping("/login/oauth2/code/github/endpoint")
+    public ResponseResult gitHubCodeEndpoint(@RequestParam String code, @RequestParam String state){
+        return new ResponseResult(HttpStatus.OK.value(), "succeed", loginService.getLoginToken(code));
     }
 }

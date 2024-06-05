@@ -9,6 +9,6 @@ public class TestController {
 
     @RequestMapping("/value")
     public String getToken(){
-        return "redirect:http://localhost:8080/hello";
+        return "hello";
     }
 }
